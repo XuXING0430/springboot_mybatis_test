@@ -1,7 +1,8 @@
 package com.kingland;
 
-import com.kingland.dao.AccountDao;
+
 import com.kingland.domian.Account;
+import com.kingland.mapper.AccountMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,9 @@ import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author xsk
@@ -21,12 +25,30 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class DatabaseConnectionTest {
 
     @Autowired
-    private AccountDao accountDao;
+    private AccountMapper accountMapper;
 
     @Test
     public void testDao(){
 
-        Account testAccount = accountDao.findAccountByName("livepool");
-        Assert.assertEquals(testAccount.getPassword(), "18942020");
+        Account testAccount =accountMapper.findAccountByName("test1");
+        Assert.assertEquals(testAccount.getPassword(), "123456");
+    }
+
+
+    @Test
+    public void testfindAll(){
+
+        List<Account> allAccounts = accountMapper.getAllAccounts();
+        for (Account allAccount : allAccounts) {
+            System.out.println(allAccount.toString());
+        }
+//        for (Account allAccount : allAccounts) {
+//            System.out.println(allAccount.toString());
+//        }
+//        Iterator<Account> iterator = allAccounts.iterator();
+//        while (iterator.hasNext()) {
+//            System.out.println(iterator.next().toString());
+//        }
+
     }
 }
